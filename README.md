@@ -1,6 +1,6 @@
 # swagger-service-skeleton-tutorial
 
-The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the incredible and generous [@steve-gray](https://github.com/steve-gray) to create a working application, or, at least to help show you how to do that. 
+The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the incredible and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that. 
 
 ## Getting started
 
@@ -12,9 +12,9 @@ I will be using _my-_ to prefix names and values that you should substitute with
 
 ### Step #1
 
-Have an idea of what you are trying to achieve. This tutorial is not going to do _Hello World_, and neither is it going to use a contrived example that you wil need to sort through to determine what is necessary, and what is not.  So, maybe this should be called a _how to_ instead of a tutorial Whatever.
+Have an idea of what you are trying to achieve. This tutorial is not going to do _Hello World_, and neither is it going to use a contrived example that you wil need to sort through to determine what is necessary and what is not. So, maybe this should be called a _how to_ instead of a tutorial Whatever.
 
-Now, the rest of the steps do not need to be done in the prescribed order, although some need to be done before others. I'll _try_ to note where this happens - but, if in doubt, just do it in this order.
+Now, the rest of the steps do not _need_ to be done in the prescribed order, although some need to be done before others. I'll _try_ to note where this happens - but, if in doubt, just do it in this order.
 
 ### Step #2
 
@@ -22,9 +22,9 @@ Now, the rest of the steps do not need to be done in the prescribed order, altho
 
 Fork the companion repo, rename it (__NB:__ this will become _my-app_), and then clone it.
 
-[Instructions on forking](https://help.github.com/articles/fork-a-repo/)
-[Instructions on renaming](https://help.github.com/articles/renaming-a-repository/)
-[Companion repo](https://github.com/fastbean-au/swagger-service-skeleton-starter)
+* [Instructions on forking](https://help.github.com/articles/fork-a-repo/)
+* [Instructions on renaming](https://help.github.com/articles/renaming-a-repository/)
+* [Companion repo](https://github.com/fastbean-au/swagger-service-skeleton-starter)
 
 ##### What's in the companion repo?
 
@@ -111,9 +111,50 @@ Yeah - basically you need what's in the compaion repo - see above.
 
 Modify the `package.json` file.
 
-You'll want to change the fields for `name`, `description`, `author`, `repository`, `issues`, `bugs`, `homepage`.
+You'll want to change the fields for `name`, `description`, `author`, `repository`, `issues`, `bugs`, `homepage`.  If you change the `license`, then be sure to replace the contents of the `LICENSE` file.
 
-### Step #4 - Defining the API
+### Step #4 - Install the libraries
+
+We will want to do this pretty early on as it ensures that we have the linting in place, and that will help ensure that we have correctly constructed code ..... I speak from experience here - the experience of not using it soon enough.
+
+From the application (repo) root directory run the following:
+
+```bash
+npm install
+```
+
+This will add and populate the `node_modules` directory in the root of the application/repo. You shouldn't need to touch anything in here. You'll now have a directory tree that looks like this:
+
+```
+|   .eslintrc.json
+|   .gitignore
+|   Gruntfile.js
+|   index.js
+|   LICENSE
+|   package.json
+|   README.md
+|
++---config
+|       default.json
+|
++---node_modules          <--- This has been added, with a whole bunch of sub-directories
+|
+\---src
+    |   server.js
+    |
+    +---contracts
+    |       swagger.yaml
+    |
+    +---controllers
+    |       .gitignore
+    |
+    \---services
+            .gitignore
+```
+
+## Construction
+
+### Step #1 - Defining the API
 
 Point your brower at [swagger.io's editor](editor.swagger.io) and define your API.
 
@@ -121,17 +162,21 @@ Point your brower at [swagger.io's editor](editor.swagger.io) and define your AP
 
 Not so fast. There are some specific things that need to go into the swagger configuration.
 
-### Step #5 - Controllers
+### Step #2 - Response outcomes
+
+Forthcoming...... 
+
+### Step #3 - Controllers
 
 For every `path` in your swagger, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
 
 You need a corresponding controller.  Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
 
-E.g.:
+I.e.:
 
 ```yaml
 paths:
-  /repository:
+  /<my-path>:
     x-swagger-router-controller: <my-path>
 ```
 
@@ -147,11 +192,13 @@ class <My-path>ControllerImpl {
 module.exports = <My-path>ControllerImpl;
 ```
 
-### Step #6 Controller methods
+### Step #4 Controller methods
 
 For each method for a path there needs to be a corresponding `operationId`.  The value for the _operationId_ maps to a method within the controller class defined in the step above.
 
 #### Example
+
+Where _<my-path>_ is _repository_.
 
 ##### Swagger:
 ```yaml
@@ -170,7 +217,7 @@ paths:
 class RepositoryControllerImpl {
 
   /**
-  * Get the list of known waffle types
+  * 
   * @param {object} responder      - Automatically generated responder object
   */
   getRepository(responder) {
@@ -181,7 +228,13 @@ class RepositoryControllerImpl {
 module.exports = RepositoryControllerImpl;
 ```
 
-A note on operationId: these are scoped to the swagger file, not to the path as one might hope.  Thus, in the example above `the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
+A note on operationId: think of these as scoped to the swagger file, not to the path as one might hope. Thus, in the example above `the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
+
+### Step #5 - Services
+
+Optional, and, forthcoming.......
+
+Services are used by the controllers. They have no direct correspondence with the Swagger contract definition file.
 
 ## Running
 
@@ -199,8 +252,51 @@ npm install --production
 npm start
 ```
 
+Starting the application will result in a code generation step to be executed - this is where the glue between your swagger contract, the server, and your controllers and services is produced. This will be placed in the directory `./dist/codegen` in the root of your application/repo. You'll end up with a tree that looks like this:
+
+```
+|   .eslintrc.json
+|   .gitignore
+|   Gruntfile.js
+|   index.js
+|   LICENSE
+|   package.json
+|   README.md
+|
++---dist                  <--- This has been added
+|   \ codegen             <--- This contains the generated code. LiTFA!
+|
++---config
+|       default.json
+|
++---node_modules
+|
+\---src
+    |   server.js
+    |
+    +---contracts
+    |       swagger.yaml
+    |
+    +---controllers
+    |       my-route.js   <--- That's a made-up file name
+    |
+    \---services
+            my-service.js <--- That's a made-up file name
+```
+
+
 ### Viewing the API documentation
 
 Point your browser at localhost:<listenPort>/docs
 
 where `listenPort` is the port set in the config file.
+
+## Other recommendations
+
+### Debugging
+
+Use the [debug package](https://www.npmjs.com/package/debug) in each of your controller and service files. It's already used by a very large portion of the stack that your application will be built on.
+
+### Swagger
+
+Don't fight swagger. It's generally only difficult to use when you are trying to do something in a less than optimal or non-standard way.......
