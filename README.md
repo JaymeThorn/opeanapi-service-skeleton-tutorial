@@ -1,6 +1,6 @@
 # swagger-service-skeleton-tutorial
 
-This tutorial is on using the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the incredible and generous @steve-gray to create a working application. 
+This tutorial is on using the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the incredible and generous [@steve-gray](https://github.com/steve-gray) to create a working application. 
 
 ## Getting started
 
