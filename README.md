@@ -164,11 +164,11 @@ Not so fast. There are some specific things that need to go into the swagger con
 
 ### Step #2 - Controllers
 
-For every `path` in your swagger, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
+For every `path` in your swagger contract, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
 
-You need a corresponding controller.  Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
+You need a corresponding controller. Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
 
-I.e.:
+i.e.:
 
 ```yaml
 paths:
@@ -190,11 +190,11 @@ module.exports = <My-path>ControllerImpl;
 
 ### Step #3 - Response outcomes
 
-Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object.
+Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes.
 
-E.g.:
+#### Example:
 
-swagger.yaml:
+##### swagger contract:
 
 ```yaml
       responses:
@@ -225,7 +225,8 @@ It is the controller methods that call the responder outcomes.
 
 #### Example
 
-##### Swagger:
+##### Swagger contract
+
 ```yaml
 paths:
   /<my-path>:
