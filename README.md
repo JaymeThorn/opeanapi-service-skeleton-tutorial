@@ -162,7 +162,33 @@ Point your brower at [swagger.io's editor](editor.swagger.io) and define your AP
 
 Not so fast. There are some specific things that need to go into the swagger configuration.
 
-### Step #2 - Response outcomes
+### Step #2 - Controllers
+
+For every `path` in your swagger, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
+
+You need a corresponding controller.  Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
+
+I.e.:
+
+```yaml
+paths:
+  /<my-path>:
+    x-swagger-router-controller: <my-path>
+```
+
+Uses the controller `./src/controllers/<my-path>.js`.
+
+```javascript
+'use strict';
+
+class <My-path>ControllerImpl {
+
+}
+
+module.exports = <My-path>ControllerImpl;
+```
+
+### Step #3 - Response outcomes
 
 Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object.
 
@@ -189,75 +215,47 @@ swagger.yaml:
             $ref: '#/definitions/ErrorResponse'
 ```
 
-The example above would require an ErrorResponse object definition, and for the controller method implementing the path verb to supply the defined object.
-
-### Step #3 - Controllers
-
-For every `path` in your swagger, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
-
-You need a corresponding controller.  Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
-
-I.e.:
-
-```yaml
-paths:
-  /<my-path>:
-    x-swagger-router-controller: <my-path>
-```
-
-Uses the controller `./src/controllers/<my-path>.js`.
-
-```javascript
-'use strict';
-
-class <My-path>ControllerImpl {
-
-}
-
-module.exports = <My-path>ControllerImpl;
-```
+The example above would require an `ErrorResponse` object definition, and for the controller method implementing the path verb to supply the defined object.
 
 ### Step #4 Controller methods
 
-For each method for a path there needs to be a corresponding `operationId`.  The value for the _operationId_ maps to a method within the controller class defined in the step above.
+For each verb for a path there needs to be a corresponding `operationId`.  The value for the _operationId_ maps to a method within the controller class defined in the step above.
 
-It is the controller methods that call the responder outcomes
+It is the controller methods that call the responder outcomes.
 
 #### Example
-
-Where `<my-path>` is _repository_.
 
 ##### Swagger:
 ```yaml
 paths:
-  /repository:
-    x-swagger-router-controller: repository
+  /<my-path>:
+    x-swagger-router-controller: <my-path>
     get:
-      operationId: getRepository
+      operationId: <my-method>
       responses:
         200:
-          x-gulp-swagger-codegen-outcome: success
+          x-gulp-swagger-codegen-outcome: <my-outcome>
           schema:
             type: string
 ```
 
 ##### Controller
-`./src/controller/repository.js`:
+`./src/controller/<my-path>.js`:
 ```javascript
 'use strict';
 
-class RepositoryControllerImpl {
+class <My-path>ControllerImpl {
 
   /**
   * 
   * @param {object} responder      - Automatically generated responder object
   */
-  getRepository(responder) {
-    responder.success('Yippee!');
+  <my-method>(responder) {
+    responder.<my-outcome>('Yippee!');
   }
 }
 
-module.exports = RepositoryControllerImpl;
+module.exports = <My-path>ControllerImpl;
 ```
 
 A note on operationId: think of these as scoped to the swagger file, not to the path as one might hope. Thus, in the example above `the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
