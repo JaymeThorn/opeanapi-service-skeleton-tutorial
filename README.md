@@ -198,7 +198,7 @@ For each method for a path there needs to be a corresponding `operationId`.  The
 
 #### Example
 
-Where _<my-path>_ is _repository_.
+Where `<my-path>` is _repository_.
 
 ##### Swagger:
 ```yaml
@@ -287,9 +287,7 @@ Starting the application will result in a code generation step to be executed - 
 
 ### Viewing the API documentation
 
-Point your browser at localhost:<listenPort>/docs
-
-where `listenPort` is the port set in the config file.
+Point your browser at localhost:&lt;listenPort&gt;/docs, where `listenPort` is the port set in the config file, e.g.: http://localhost:10010/docs
 
 ## Other recommendations
 
