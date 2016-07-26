@@ -1,25 +1,29 @@
 # swagger-service-skeleton-tutorial
 
-This tutorial is on using the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the incredible and generous [@steve-gray](https://github.com/steve-gray) to create a working application. 
+The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the incredible and generous [@steve-gray](https://github.com/steve-gray) to create a working application, or, at least to help show you how to do that. 
 
 ## Getting started
 
 There is a [companion repository](https://github.com/fastbean-au/swagger-service-skeleton-starter) for this tutorial which I recommend using; while it is not necessary, this tutorial will assume that you are using it.
 
+### Conventions
+
+I will be using _my-_ to prefix names and values that you should substitute with appropriate values - these will be given from the context of the step in which they are found. So, please do not blindly apply these in other contexts without thinking. E.g. `my-path` in once context may be the same as `my-controller` in another.
+
 ### Step #1
 
 Have an idea of what you are trying to achieve. This tutorial is not going to do _Hello World_, and neither is it going to use a contrived example that you wil need to sort through to determine what is necessary, and what is not.  So, maybe this should be called a _how to_ instead of a tutorial Whatever.
 
-Now, the rest of the steps do not need to be done in the prescribed order, although some need to be done before others. I'll _try_ to note where this happens - bt, if in doubt, just do it in this order.
+Now, the rest of the steps do not need to be done in the prescribed order, although some need to be done before others. I'll _try_ to note where this happens - but, if in doubt, just do it in this order.
 
 ### Step #2
 
 #### Using the companion repo
 
-Fork the companion repo, and then clone your fork.
+Fork the companion repo, rename it (__NB:__ this will become _my-app_), and then clone it.
 
-[Instructions](https://help.github.com/articles/fork-a-repo/)
-
+[Instructions on forking](https://help.github.com/articles/fork-a-repo/)
+[Instructions on renaming](https://help.github.com/articles/renaming-a-repository/)
 [Companion repo](https://github.com/fastbean-au/swagger-service-skeleton-starter)
 
 ##### What's in the companion repo?
@@ -29,32 +33,29 @@ Not much, but what is there is pretty important.
 You'll end up with a directory tree that looks like this:
 
 ```
-|   .eslintrc.json
+|   .eslintrc.json        <--- This helps to show where there are potential problems with your code
 |   .gitignore
-|   Gruntfile.js
-|   index.js
-|   jsconfig.json
+|   Gruntfile.js          <--- Runs ESLint over your code
+|   index.js              <--- LiTFA!  Loads and executes ./src/server.js
 |   LICENSE
-|   package.json
-|   README.md
+|   package.json          <--- You need to edit this file and make it your own!
+|   README.md             <--- Put your content in here
 |
 +---config
-|       default.json
+|       default.json      <--- Set the port here, and add any other configuration options you want
 |
 \---src
-    |   server.js
+    |   server.js         <--- LiTFA!
     |
     +---contracts
-    |       swagger.yaml
+    |       swagger.yaml  <--- Empty. Placeholder. Replace with your swagger.yaml file.
     |
-    +---controllers
-    |       .gitignore
+    +---controllers       <--- This is where *your* Controllers are placed.
+    |       .gitignore    <--- Empty. Used to allow the directory to exist in GitHub.
     |
-    \---services
-            .gitignore
+    \---services          <--- This is where *your* Services are placed.
+            .gitignore    <--- Empty. Used to allow the directory to exist in GitHub.
 ```
-
-`index.js` loads and executes `./src/server.js`. LiTFA - that goes for both of them. Really.  Don't touch them.
 
 ###### server.js
 
@@ -131,28 +132,28 @@ E.g.:
 ```yaml
 paths:
   /repository:
-    x-swagger-router-controller: repository
+    x-swagger-router-controller: <my-path>
 ```
 
-Uses the controller `./src/controllers/repository.js`.
+Uses the controller `./src/controllers/<my-path>.js`.
 
 ```javascript
 'use strict';
 
-class RepositoryControllerImpl {
+class <My-path>ControllerImpl {
 
 }
 
-module.exports = RepositoryControllerImpl;
+module.exports = <My-path>ControllerImpl;
 ```
 
 ### Step #6 Controller methods
 
 For each method for a path there needs to be a corresponding `operationId`.  The value for the _operationId_ maps to a method within the controller class defined in the step above.
 
-E.g.:
+#### Example
 
-swagger:
+##### Swagger:
 ```yaml
 paths:
   /repository:
@@ -161,6 +162,7 @@ paths:
       operationId: getRepository
 ```
 
+##### Controller
 `./src/controller/repository.js`:
 ```javascript
 'use strict';
@@ -183,6 +185,14 @@ A note on operationId: these are scoped to the swagger file, not to the path as 
 
 ## Running
 
+### Installing for production
+
+```bash
+git clone https://github.com/<user name>/<my-app>.git
+cd <my-app>
+npm install --production
+```
+
 ### Starting
 
 ```bash
@@ -191,4 +201,6 @@ npm start
 
 ### Viewing the API documentation
 
-Point your browser at localhost:10010/docs
+Point your browser at localhost:<listenPort>/docs
+
+where `listenPort` is the port set in the config file.
