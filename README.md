@@ -164,7 +164,32 @@ Not so fast. There are some specific things that need to go into the swagger con
 
 ### Step #2 - Response outcomes
 
-Forthcoming...... 
+Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object.
+
+E.g.:
+
+swagger.yaml:
+
+```yaml
+      responses:
+        204:
+          x-gulp-swagger-codegen-outcome: success
+          description: My response object
+          schema:
+            $ref: '#/definitions/<my-object>'
+        400:
+          x-gulp-swagger-codegen-outcome: badRequest
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          x-gulp-swagger-codegen-outcome: error
+          description: server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+```
+
+The example above would require an ErrorResponse object definition, and for the controller method implementing the path verb to supply the defined object.
 
 ### Step #3 - Controllers
 
@@ -196,6 +221,8 @@ module.exports = <My-path>ControllerImpl;
 
 For each method for a path there needs to be a corresponding `operationId`.  The value for the _operationId_ maps to a method within the controller class defined in the step above.
 
+It is the controller methods that call the responder outcomes
+
 #### Example
 
 Where `<my-path>` is _repository_.
@@ -207,6 +234,11 @@ paths:
     x-swagger-router-controller: repository
     get:
       operationId: getRepository
+      responses:
+        200:
+          x-gulp-swagger-codegen-outcome: success
+          schema:
+            type: string
 ```
 
 ##### Controller
