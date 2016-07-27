@@ -269,6 +269,14 @@ Optional, and, forthcoming.......
 
 Services are used by the controllers. They have no direct correspondence with the Swagger contract definition file.
 
+### Step #6 - Adding the Swagger
+
+Now that the swagger contract has been updated with the requirements of the _swagger-service-skeleton_ framework, it can be placed into the application (delaying this up until this point helps to ensure that the swagger.io parser is able to identify any issues that might otherwise be very difficult to pick up through the application itself). You can either copy the contents onto your clipboard and paste into the file `./src/contracts/swagger.yaml` or you can download the YAML file from swagger.io and overwrite the existing `./src/contracts/swagger.yaml` file.
+
+### Step #7 - Committing
+
+You will really want to cmmit your changes now, before you run. 
+
 ## Running
 
 ### Installing for production
