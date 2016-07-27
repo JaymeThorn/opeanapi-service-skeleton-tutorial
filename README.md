@@ -190,6 +190,9 @@ class <My-path>ControllerImpl {
 module.exports = <My-path>ControllerImpl;
 ```
 
+__Q:__ Is it necessary to have the controller name the same as the contract path? 
+A: No, absolutely not! Except that it's easier and more intuitive to do it that way.
+
 ### Step #3 - Response outcomes
 
 Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes.
@@ -286,6 +289,8 @@ You will really want to cmmit your changes now, before you run.
 The example shown in the image below (using Visual Studio Code), is a highly simplified contrivance, which I am hoping helps to show the relationships between various pieces.
 
 ![alt text](https://github.com/fastbean-au/swagger-service-skeleton-tutorial/blob/master/images/contract-controllers.png "Contract and controllers")
+
+![alt text](https://github.com/fastbean-au/swagger-service-skeleton-tutorial/blob/master/images/contract-controllers-annotated.png "Contract and controllers - annotated")
 
 ## Running
 
