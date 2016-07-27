@@ -263,9 +263,13 @@ module.exports = <My-path>ControllerImpl;
 
 A note on operationId: think of these as scoped to the swagger file, not to the path as one might hope. Thus, in the example above `the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
 
+### Step #4A - Controller method parameters
+
+Forthcoming...
+
 ### Step #5 - Services
 
-Optional, and, forthcoming.......
+Optional, good practice, and, forthcoming.......
 
 Services are used by the controllers. They have no direct correspondence with the Swagger contract definition file.
 
@@ -275,7 +279,13 @@ Now that the swagger contract has been updated with the requirements of the _swa
 
 ### Step #7 - Committing
 
-You will really want to cmmit your changes now, before you run. 
+You will really want to cmmit your changes now, before you run.
+
+## An Example
+
+The example shown in the image below (using Visual Studio Code), is a highly simplified contrivance, which I am hoping helps to show the relationships between various pieces.
+
+![alt text](../blob/master/images/contract-controllers.png "Contract and controllers")
 
 ## Running
 
