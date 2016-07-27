@@ -285,7 +285,7 @@ You will really want to cmmit your changes now, before you run.
 
 The example shown in the image below (using Visual Studio Code), is a highly simplified contrivance, which I am hoping helps to show the relationships between various pieces.
 
-![alt text](../blob/master/images/contract-controllers.png "Contract and controllers")
+![alt text](https://github.com/fastbean-au/swagger-service-skeleton-tutorial/blob/master/images/contract-controllers.png "Contract and controllers")
 
 ## Running
 
