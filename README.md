@@ -6,6 +6,8 @@ The purpose of this tutorial is to use the excellent [swagger-service-skeleton](
 
 There is a [companion repository](https://github.com/fastbean-au/swagger-service-skeleton-starter) for this tutorial which I recommend using; while it is not necessary, this tutorial will assume that you are using it.
 
+[![Dependency Status](https://dependencyci.com/github/fastbean-au/swagger-service-skeleton-starter/badge)](https://dependencyci.com/github/fastbean-au/swagger-service-skeleton-starter)
+
 ### Conventions
 
 I will be using _my-_ to prefix names and values that you should substitute with appropriate values - these will be given from the context of the step in which they are found. So, please do not blindly apply these in other contexts without thinking. E.g. `my-path` in once context may be the same as `my-controller` in another.
