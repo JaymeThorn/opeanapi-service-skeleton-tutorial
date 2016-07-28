@@ -1,6 +1,6 @@
 # swagger-service-skeleton-tutorial
 
-The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the incredible and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that. 
+The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that. 
 
 ## Getting started
 
@@ -14,7 +14,7 @@ I will be using _my-_ to prefix names and values that you should substitute with
 
 ### Step #1
 
-Have an idea of what you are trying to achieve. This tutorial is not going to do _Hello World_, and neither is it going to use a contrived example that you wil need to sort through to determine what is necessary and what is not. So, maybe this should be called a _how to_ instead of a tutorial Whatever.
+Have an idea of what you are trying to achieve. This tutorial is not going to do _Hello World_, and neither is it going to use a contrived example that you will need to sort through to determine what is necessary and what is not. So, maybe this should be called a _how to_ instead of a tutorial Whatever.
 
 Now, the rest of the steps do not _need_ to be done in the prescribed order, although some need to be done before others. I'll _try_ to note where this happens - but, if in doubt, just do it in this order.
 
@@ -158,7 +158,9 @@ This will add and populate the `node_modules` directory in the root of the appli
 
 ### Step #1 - Defining the API
 
-Point your brower at [swagger.io's editor](editor.swagger.io) and define your API.
+Point your brower at [swagger.io's editor](editor.swagger.io) and define your API. 
+
+__Important note:__ Before you get carried away, you need to be aware of an issue in the stack that prevents the HTTP/S verb _PATCH_ from working.
 
 ### Okay, I have my swagger, what now?
 
@@ -343,7 +345,7 @@ Starting the application will result in a code generation step to be executed - 
 
 ### Viewing the API documentation
 
-Point your browser at localhost:&lt;listenPort&gt;/docs, where `listenPort` is the port set in the config file, e.g.: http://localhost:10010/docs
+Point your browser at localhost:&lt;listenPort&gt;/docs, where `listenPort` is the port set in the config file, e.g.: [http://localhost:10010/docs](http://localhost:10010/docs)
 
 ## Other recommendations
 
