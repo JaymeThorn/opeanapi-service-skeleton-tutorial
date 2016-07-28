@@ -270,7 +270,9 @@ A note on operationId: think of these as scoped to the swagger file, not to the 
 
 ### Step #4A - Controller method parameters
 
-Forthcoming...
+Controller method parameters are determined by the parameters as defined in the swagger contract, in lexicographical order, with the special _responder_ object as an added final parameter.
+
+If you want to keep it straightforward, you can use JSON objects as the sole parameter for the contract path's verb. If you do this, then you will have two parameters always in the same predicable order. Yeah, I know, helpful (maybe), but not really informative.
 
 ### Step #5 - Services
 
@@ -283,6 +285,12 @@ The services are injected, and that means that a bit of magic happens by the fra
 #### Name resolution
 
 Name resolution is vital to understand how to allow the magic that is injection work it's, well, magic.
+
+To keep this fairly simple, the name of the service as referenced in the controller class' constructor parameters should be a camel case of the filename without extension (the basename), using the dash/hyphen as a word separator.
+
+Thus, the camel case for camel-case would be camelCase.
+
+Working back from that, name your service file based on the logical name for your service class. A service class called _MyDatabaseBackup_ should be in a file named `my-database-backup.js`.
 
 #### Example
 
