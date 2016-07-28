@@ -1,6 +1,10 @@
 # swagger-service-skeleton-tutorial
 
-The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that. 
+The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that.
+
+## What this is not
+
+This is not a tutorial or how-to for NodeJS/Javascript, Swagger, API design, or GitHub.  This assumes that you have enough knowledge of those to operate in a somewhat competent manner. Which is not to say that some pointers or references will not be give, it's just that this it is not the purpose of this tutorial/how-to.
 
 ## Getting started
 
@@ -28,7 +32,7 @@ Fork the companion repo, rename it (__NB:__ this will become _my-app_), and then
 * [Instructions on renaming](https://help.github.com/articles/renaming-a-repository/)
 * [Companion repo](https://github.com/fastbean-au/swagger-service-skeleton-starter)
 
-##### What's in the companion repo?
+##### What's in the companion repo
 
 Not much, but what is there is pretty important.
 
@@ -105,9 +109,9 @@ const instanceGenerator = () => skeleton({
 module.exports = instanceGenerator;
 ```
 
-#### Going it yourself 
+#### Going it yourself
 
-Yeah - basically you need what's in the compaion repo - see above.
+Yeah - basically you need what's in the companion repo - see above.
 
 ### Step #3 - Make it yours
 
@@ -117,7 +121,7 @@ You'll want to change the fields for `name`, `description`, `author`, `repositor
 
 ### Step #4 - Install the libraries
 
-We will want to do this pretty early on as it ensures that we have the linting in place, and that will help ensure that we have correctly constructed code ..... I speak from experience here - the experience of not using it soon enough.
+We will want to do this pretty early on as it ensures that we have the linting in place, and that will help ensure that we have correctly constructed code ..... I speak from experience here, the experience of not using it soon enough.
 
 From the application (repo) root directory run the following:
 
@@ -158,17 +162,17 @@ This will add and populate the `node_modules` directory in the root of the appli
 
 ### Step #1 - Defining the API
 
-Point your brower at [swagger.io's editor](editor.swagger.io) and define your API. 
+Point your browser at [swagger.io's editor](editor.swagger.io) and define your API. 
 
-__Important note:__ Before you get carried away, you need to be aware of an issue in the stack that prevents the HTTP/S verb _PATCH_ from working.
+__Important note:__ Before you get carried away, you need to be aware of an issue in the stack that prevents the HTTP/S verb _PATCH_ from working, instead of using _PATCH_ you will probably want to use _PUT_.
 
-### Okay, I have my swagger, what now?
+### Okay, I have my swagger, what now
 
 Not so fast. There are some specific things that need to go into the swagger configuration.
 
 ### Step #2 - Controllers
 
-For every `path` in your swagger contract, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
+For every `path` in your swagger contract, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will be a corresponding controller file of the same name).
 
 You need a corresponding controller. Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
 
@@ -192,16 +196,17 @@ class <My-path>ControllerImpl {
 module.exports = <My-path>ControllerImpl;
 ```
 
-__Q:__ Is it necessary to have the controller name the same as the contract path? 
+__Q:__ Is it necessary to have the controller name the same as the contract path?
+
 A: No, absolutely not! Except that it's easier and more intuitive to do it that way.
 
 ### Step #3 - Response outcomes
 
 Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes.
 
-#### Example:
+#### Example
 
-##### swagger contract:
+##### swagger contract
 
 ```yaml
       responses:
@@ -272,7 +277,7 @@ A note on operationId: think of these as scoped to the swagger file, not to the 
 
 Controller method parameters are determined by the parameters as defined in the swagger contract, in lexicographical order, with the special _responder_ object as an added final parameter.
 
-If you want to keep it straightforward, you can use JSON objects as the sole parameter for the contract path's verb. If you do this, then you will have two parameters always in the same predicable order. Yeah, I know, helpful (maybe), but not really informative.
+If you want to keep it straightforward, you can use JSON objects as the sole parameter for the contract path's verb. If you do this, then you will have two parameters always in the same predictable order. Yeah, I know, helpful (maybe), but not really informative.
 
 ### Step #5 - Services
 
@@ -294,7 +299,7 @@ Working back from that, name your service file based on the logical name for you
 
 #### Example
 
-In this example, unlike any other uses elsewhere, the `my-` in `my-services` is being used as a literal exaple rather than as simply a placeholder. This is because of the importance of the name construction to the injection magic.
+In this example, unlike any other uses elsewhere, the `my-` in `my-services` is being used as a literal example rather than as simply a placeholder. This is because of the importance of the name construction to the injection magic.
 
 ##### Service
 
@@ -313,7 +318,7 @@ module.exports = MyService;
 
 ##### Controller
 
-In your contract code you would make this service avaialble similar to this:
+In your contract code you would make this service available similar to this:
 
 `./src/controllers/<my-path>.js`
 
@@ -332,7 +337,7 @@ Now that the swagger contract has been updated with the requirements of the _swa
 
 ### Step #7 - Committing
 
-You will really want to cmmit your changes now, before you run.
+You will really want to commit your changes now, before you run.
 
 ## An Example
 
@@ -393,7 +398,7 @@ Starting the application will result in a code generation step to be executed - 
 
 ### Viewing the API documentation
 
-Point your browser at localhost:&lt;listenPort&gt;/docs, where `listenPort` is the port set in the config file, e.g.: [http://localhost:10010/docs](http://localhost:10010/docs)
+Point your browser at localhost:&lt;listenPort&gt;/docs, where `listenPort` is the port set in the configuration file, e.g.: [http://localhost:10010/docs](http://localhost:10010/docs)
 
 ## Other recommendations
 
