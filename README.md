@@ -274,9 +274,49 @@ Forthcoming...
 
 ### Step #5 - Services
 
-Optional, good practice, and, forthcoming.......
+Let's start with a simple statement. Services are _optional_, They are good practice for a separation of concerns and simplifying your code, but they remain _optional_.
 
-Services are used by the controllers. They have no direct correspondence with the Swagger contract definition file.
+In our context, services are used by the controllers. They have no direct correspondence with the Swagger contract definition file, that is, they are services that support the controllers, and not the services of which _swagger-service-skeleton_ speaks.
+
+The services are injected, and that means that a bit of magic happens by the framework that allows this to work, and that makes it easier ...
+
+#### Name resolution
+
+Name resolution is vital to understand how to allow the magic that is injection work it's, well, magic.
+
+#### Example
+
+In this example, unlike any other uses elsewhere, the `my-` in `my-services` is being used as a literal exaple rather than as simply a placeholder. This is because of the importance of the name construction to the injection magic.
+
+##### Service
+
+`./services/my-service.js`
+
+```javascript
+'use strict';
+
+class MyService {
+  constructor() {
+  }
+}
+
+module.exports = MyService;
+```
+
+##### Controller
+
+In your contract code you would make this service avaialble similar to this:
+
+`./src/controllers/<my-path>.js`
+
+```javascript
+'use strict';
+
+class <My-path>ControllerImpl {
+  constructor(myService) {
+    this.myService = myService;
+  }
+```
 
 ### Step #6 - Adding the Swagger
 
