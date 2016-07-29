@@ -10,7 +10,7 @@ There is a [companion repository](https://github.com/fastbean-au/swagger-service
 
 ### Conventions
 
-I will be using _my-_ to prefix names and values that you should substitute with appropriate values - these will be given from the context of the step in which they are found. So, please do not blindly apply these in other contexts without thinking. E.g. `my-path` in once context may be the same as `my-controller` in another.
+I will be using _my-_ to prefix names and values that you should substitute with appropriate values - these will be given from the context of the step in which they are found. So, please do not blindly apply these in other contexts without thinking. E.g. `my-path` in one context may be the same as `my-controller` in another.
 
 ### Step #1
 
@@ -18,21 +18,19 @@ Have an idea of what you are trying to achieve. This tutorial is not going to do
 
 Now, the rest of the steps do not _need_ to be done in the prescribed order, although some need to be done before others. I'll _try_ to note where this happens - but, if in doubt, just do it in this order.
 
-### Step #2
+### Step #2 - Using the companion repository
 
-#### Using the companion repo
-
-Fork the companion repo, rename it (__NB:__ this will become _my-app_), and then clone it.
+Fork the companion repository, rename it (__NB:__ this will become what will be referred to as _my-app_), and then clone it.
 
 * [Instructions on forking](https://help.github.com/articles/fork-a-repo/)
 * [Instructions on renaming](https://help.github.com/articles/renaming-a-repository/)
-* [Companion repo](https://github.com/fastbean-au/swagger-service-skeleton-starter)
+* [Companion repository](https://github.com/fastbean-au/swagger-service-skeleton-starter)
 
-##### What's in the companion repo?
+You don't really need to fork the companion repository. Clone it and copy the contents, download it, it doesn't really matter all that much. But, if you fork it, you can more easily see if the companion repository has been updated (of course, you could watch it too). 
 
-Not much, but what is there is pretty important.
+#### What's in the companion repository?
 
-You'll end up with a directory tree that looks like this:
+Not much really, but what is there is pretty important. Once you have forked it you'll end up with a directory tree that looks like this:
 
 ```
 |   .eslintrc.json        <--- This helps to show where there are potential problems with your code
@@ -59,9 +57,9 @@ You'll end up with a directory tree that looks like this:
             .gitignore    <--- Empty. Used to allow the directory to exist in GitHub.
 ```
 
-###### server.js
+##### server.js
 
-The paths used in `server.js` can be a little confusing.  Below, the contents of the file have been annotated .
+The paths used in `server.js` can be a little confusing. Below, the contents of the file have been annotated. This is important to know only if you want to change the structure - but don't do that now, not for this.
 
 ```javascript
 'use strict';
@@ -107,25 +105,25 @@ module.exports = instanceGenerator;
 
 #### Going it yourself 
 
-Yeah - basically you need what's in the compaion repo - see above.
+Yeah - basically you need what's in the companion repository - see above.
 
 ### Step #3 - Make it yours
 
 Modify the `package.json` file.
 
-You'll want to change the fields for `name`, `description`, `author`, `repository`, `issues`, `bugs`, `homepage`.  If you change the `license`, then be sure to replace the contents of the `LICENSE` file.
+You'll want to change the fields for `name`, `description`, `author`, `repository`, `issues`, `bugs`, `homepage`. If you change the `license`, then be sure to replace the contents of the `LICENSE` file.
 
 ### Step #4 - Install the libraries
 
 We will want to do this pretty early on as it ensures that we have the linting in place, and that will help ensure that we have correctly constructed code ..... I speak from experience here - the experience of not using it soon enough.
 
-From the application (repo) root directory run the following:
+From the application (repository) root directory run the following:
 
 ```bash
 npm install
 ```
 
-This will add and populate the `node_modules` directory in the root of the application/repo. You shouldn't need to touch anything in here. You'll now have a directory tree that looks like this:
+This will add and populate the `node_modules` directory in the root of the application/repository. You shouldn't need to touch anything in here. You'll now have a directory tree that looks like this:
 
 ```
 |   .eslintrc.json
@@ -168,7 +166,7 @@ Not so fast. There are some specific things that need to go into the swagger con
 
 ### Step #2 - Controllers
 
-For every `path` in your swagger contract, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`.  Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
+For every `path` in your swagger contract, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`. Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will bea corresponding controler file of the same name).
 
 You need a corresponding controller. Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
 
@@ -193,7 +191,8 @@ module.exports = <My-path>ControllerImpl;
 ```
 
 __Q:__ Is it necessary to have the controller name the same as the contract path? 
-A: No, absolutely not! Except that it's easier and more intuitive to do it that way.
+
+__A:__ No, absolutely not. Except that it's easier and more intuitive to do it that way.
 
 ### Step #3 - Response outcomes
 
@@ -226,7 +225,7 @@ The example above would require an `ErrorResponse` object definition, and for th
 
 ### Step #4 Controller methods
 
-For each verb for a path there needs to be a corresponding `operationId`.  The value for the _operationId_ maps to a method within the controller class defined in the step above.
+For each verb for a path there needs to be a corresponding `operationId`. The value for the _operationId_ maps to a method within the controller class defined in the step above.
 
 It is the controller methods that call the responder outcomes.
 
@@ -344,16 +343,6 @@ The example shown in the image below (using Visual Studio Code), is a highly sim
 
 ## Running
 
-### Installing for production
-
-```bash
-git clone https://github.com/<user name>/<my-app>.git
-cd <my-app>
-npm install --production
-```
-
-### Starting
-
 ```bash
 npm start
 ```
@@ -393,13 +382,33 @@ Starting the application will result in a code generation step to be executed - 
 
 ### Viewing the API documentation
 
-Point your browser at localhost:&lt;listenPort&gt;/docs, where `listenPort` is the port set in the config file, e.g.: [http://localhost:10010/docs](http://localhost:10010/docs)
+Point your browser at localhost:&lt;listenPort&gt;/docs, where `listenPort` is the port set in the configuration file, e.g.: [http://localhost:10010/docs](http://localhost:10010/docs)
 
 ## Other recommendations
 
 ### Debugging
 
 Use the [debug package](https://www.npmjs.com/package/debug) in each of your controller and service files. It's already used by a very large portion of the stack that your application will be built on.
+
+### Configuration
+
+The [config package](https://www.npmjs.com/package/config) is already used by the server, and there is already a default configuration file which can be extended. If you need to have configuration settings, I would suggest using this package.
+
+### Deployment
+
+Opinionated advice:
+
+* Use containers (e.g. [Docker](http://docker.io/)) - this application structure is eminitely suitable for use as a container (based on the [node container](https://hub.docker.com/_/node/)).
+* Do not package as an NPM package - this is an application, not a library - it needs to be instantiated, not installed.
+
+#### Installing for production
+
+```bash
+git clone https://github.com/<user name>/<my-app>.git
+cd <my-app>
+npm install --production
+npm start
+```
 
 ### Swagger
 
