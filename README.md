@@ -30,13 +30,9 @@ Fork the companion repository, rename it (__NB:__ this will become what will be 
 * [Instructions on renaming](https://help.github.com/articles/renaming-a-repository/)
 * [Companion repository](https://github.com/fastbean-au/swagger-service-skeleton-starter)
 
-<<<<<<< HEAD
 You don't really need to fork the companion repository. Clone it and copy the contents, download it, it doesn't really matter all that much. But, if you fork it, you can more easily see if the companion repository has been updated (of course, you could watch it too). 
-=======
-##### What's in the companion repo
->>>>>>> d10b25ec10d093a9b28c5d9f3e2794c41de14554
 
-#### What's in the companion repository?
+#### What's in the companion repository
 
 Not much really, but what is there is pretty important. Once you have forked it you'll end up with a directory tree that looks like this:
 
@@ -113,11 +109,7 @@ module.exports = instanceGenerator;
 
 #### Going it yourself
 
-<<<<<<< HEAD
 Yeah - basically you need what's in the companion repository - see above.
-=======
-Yeah - basically you need what's in the companion repo - see above.
->>>>>>> d10b25ec10d093a9b28c5d9f3e2794c41de14554
 
 ### Step #3 - Make it yours
 
