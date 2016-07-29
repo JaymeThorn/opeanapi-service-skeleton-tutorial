@@ -166,11 +166,11 @@ __Important note:__ Before you get carried away, you need to be aware of an issu
 
 ### Okay, I have my swagger, what now
 
-Not so fast. There are some specific things that need to go into the swagger configuration.
+Not so fast. There are some specific things that need to go into the Swagger configuration.
 
 ### Step #2 - Controllers
 
-For every `path` in your swagger contract, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`. Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will be a corresponding controller file of the same name).
+For every `path` in your Swagger configuration, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`. Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will be a corresponding controller file of the same name).
 
 You need a corresponding controller. Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
 
@@ -200,11 +200,11 @@ __A:__ No, absolutely not. Except that it's easier and more intuitive to do it t
 
 ### Step #3 - Response outcomes
 
-Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome.
+Each response defined in your Swagger configuration needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome.
 
 #### Example
 
-##### swagger contract
+##### Swagger configuration
 
 ```yaml
       responses:
@@ -238,11 +238,11 @@ For each verb for a path there needs to be a corresponding `operationId`. The va
 
 It is the controller methods that call the responder outcomes.
 
-I would _suggest_ just creating the controller methods as stubs for the time being. Maybe include a debug statement, and return a successful response, or a 501 - Not implemented response (this would need to be included in your swagger configuration). Go back later and actually write the functional aspects of the methods.
+I would _suggest_ just creating the controller methods as stubs for the time being. Maybe include a debug statement, and return a successful response, or a 501 - Not implemented response (this would need to be included in your Swagger configuration). Go back later and actually write the functional aspects of the methods.
 
 #### Example
 
-##### Swagger contract
+##### Swagger configuration
 
 ```yaml
 paths:
@@ -276,19 +276,19 @@ class <My-path>ControllerImpl {
 module.exports = <My-path>ControllerImpl;
 ```
 
-A note on operationId: think of these as scoped to the swagger file, not to the path as one might hope. Thus, in the example above, the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
+A note on operationId: think of these as scoped to the Swagger configuration file, not to the path as one might hope. Thus, in the example above, the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
 
 ### Step #4A - Controller method parameters
 
-Controller method parameters are determined by the parameters as defined in the swagger contract, in lexicographical order, with the special _responder_ object as an added final parameter.
+Controller method parameters are determined by the parameters as defined in the Swagger configuration, in lexicographical order, with the special _responder_ object as an added final parameter.
 
-If you want to keep it straightforward, you can use JSON objects as the sole parameter for the contract path's verb. If you do this, then you will have two parameters always in the same predictable order. Yeah, I know, helpful (maybe), but not really informative.
+If you want to keep it straightforward, you can use JSON objects as the sole parameter for the configuration path's verb. If you do this, then you will have two parameters always in the same predictable order. Yeah, I know, helpful (maybe), but not really informative.
 
 ### Step #5 - Services
 
 Let's start with a simple statement. Services are _optional_, They are good practice for a separation of concerns and simplifying your code, but they remain _optional_.
 
-In our context, services are used by the controllers. They have no direct correspondence with the Swagger contract definition file, that is, they are services that support the controllers, and not the services of which _swagger-service-skeleton_ speaks. Services might include things like security, persistence (database), etcetera.
+In our context, services are used by the controllers. They have no direct correspondence with the Swagger configuration definition file, that is, they are services that support the controllers, and not the services of which _swagger-service-skeleton_ speaks. Services might include things like security, persistence (database), etcetera.
 
 The services are injected, and that means that a bit of magic happens by the framework that allows this to work, and that makes it easier ...
 
@@ -348,7 +348,7 @@ You will really want to commit your changes now, before you go any further. This
 
 ### Step #8 - Writing the code
 
-Go through and write your functional code in the methods for the controllers and services. Remove the 501 - Not implemented response from the method, and the corresponding response outcomes from the swagger configuration (again, I would suggest doing this in the [swagger editor](http://editor.swagger.io)). Commit as you go.
+Go through and write your functional code in the methods for the controllers and services. Remove the 501 - Not implemented response from the method, and the corresponding response outcomes from the Swagger configuration (again, I would suggest doing this in the [swagger editor](http://editor.swagger.io)). Commit as you go.
 
 ## An Example
 
@@ -364,7 +364,7 @@ The example shown in the image below (using Visual Studio Code), is a highly sim
 npm start
 ```
 
-Starting the application will result in a code generation step to be executed - this is where the glue between your swagger contract, the server, and your controllers and services is produced. This will be placed in the directory `./dist/codegen` in the root of your application/repo. You'll end up with a tree that looks like this:
+Starting the application will result in a code generation step to be executed - this is where the glue between your Swagger configuration, the server, and your controllers and services is produced. This will be placed in the directory `./dist/codegen` in the root of your application/repo. You'll end up with a tree that looks like this:
 
 ```
 |   .eslintrc.json
