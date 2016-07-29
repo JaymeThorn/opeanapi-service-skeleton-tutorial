@@ -160,7 +160,7 @@ This will add and populate the `node_modules` directory in the root of the appli
 
 ### Step #1 - Defining the API
 
-Point your browser at [swagger.io's editor](editor.swagger.io) and define your API. 
+Point your browser at [swagger.io's editor](editor.swagger.io) and define your API.
 
 __Important note:__ Before you get carried away, you need to be aware of an issue in the stack that prevents the HTTP/S verb _PATCH_ from working, instead of using _PATCH_ you will probably want to use _PUT_.
 
@@ -200,7 +200,7 @@ __A:__ No, absolutely not. Except that it's easier and more intuitive to do it t
 
 ### Step #3 - Response outcomes
 
-Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes.
+Each response defined in your swagger contract needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome.
 
 #### Example
 
@@ -215,12 +215,17 @@ Each response defined in your swagger contract needs to have a corresponding ent
             $ref: '#/definitions/<my-object>'
         400:
           x-gulp-swagger-codegen-outcome: badRequest
-          description: bad request
+          description: Bad request
           schema:
             $ref: '#/definitions/ErrorResponse'
         500:
           x-gulp-swagger-codegen-outcome: error
-          description: server error
+          description: Server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        501:
+          x-gulp-swagger-codegen-outcome: notImplemented
+          description: Not implemented
           schema:
             $ref: '#/definitions/ErrorResponse'
 ```
@@ -232,6 +237,8 @@ The example above would require an `ErrorResponse` object definition, and for th
 For each verb for a path there needs to be a corresponding `operationId`. The value for the _operationId_ maps to a method within the controller class defined in the step above.
 
 It is the controller methods that call the responder outcomes.
+
+I would _suggest_ just creating the controller methods as stubs for the time being. Maybe include a debug statement, and return a successful response, or a 501 - Not implemented response (this would need to be included in your swagger configuration). Go back later and actually write the functional aspects of the methods.
 
 #### Example
 
@@ -269,7 +276,7 @@ class <My-path>ControllerImpl {
 module.exports = <My-path>ControllerImpl;
 ```
 
-A note on operationId: think of these as scoped to the swagger file, not to the path as one might hope. Thus, in the example above `the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
+A note on operationId: think of these as scoped to the swagger file, not to the path as one might hope. Thus, in the example above, the repository GET method maps not to the repository controller's _get_ method, but to _getRepository_.
 
 ### Step #4A - Controller method parameters
 
@@ -281,9 +288,11 @@ If you want to keep it straightforward, you can use JSON objects as the sole par
 
 Let's start with a simple statement. Services are _optional_, They are good practice for a separation of concerns and simplifying your code, but they remain _optional_.
 
-In our context, services are used by the controllers. They have no direct correspondence with the Swagger contract definition file, that is, they are services that support the controllers, and not the services of which _swagger-service-skeleton_ speaks.
+In our context, services are used by the controllers. They have no direct correspondence with the Swagger contract definition file, that is, they are services that support the controllers, and not the services of which _swagger-service-skeleton_ speaks. Services might include things like security, persistence (database), etcetera.
 
 The services are injected, and that means that a bit of magic happens by the framework that allows this to work, and that makes it easier ...
+
+The services do not _need_ to be written now, and I would suggest deferring the writing of them until once the application structure has been completed (step #7)
 
 #### Name resolution
 
@@ -335,7 +344,11 @@ Now that the swagger contract has been updated with the requirements of the _swa
 
 ### Step #7 - Committing
 
-You will really want to commit your changes now, before you run.
+You will really want to commit your changes now, before you go any further. This is the point at which you can run the application and check your API "works".
+
+### Step #8 - Writing the code
+
+Go through and write your functional code in the methods for the controllers and services. Remove the 501 - Not implemented response from the method, and the corresponding response outcomes from the swagger configuration (again, I would suggest doing this in the [swagger editor](http://editor.swagger.io)). Commit as you go.
 
 ## An Example
 
