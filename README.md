@@ -2,9 +2,13 @@
 
 The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that.
 
+The Swagger service skeleton allows you to produce a web service without having to worry about most of the plumbing. It's use, though, does require some care and attention to detail to get it right. Helping you to get that right is what this hopes to achieve.
+
+You might want to use the Swagger service skeleton as part of a microservice, a complete nanoservice, a service in a service-oriented-architecture (SOA), or just to provide a RESTful (or stateful) API for a system. It's not limited to those things, but that's the target for it. It's not going to serve up your UI for you - it's not user facing.
+
 ## What this is not
 
-This is not a tutorial or how-to for NodeJS/Javascript, Swagger, API design, or GitHub.  This assumes that you have enough knowledge of those to operate in a somewhat competent manner. Which is not to say that some pointers or references will not be give, it's just that this it is not the purpose of this tutorial/how-to.
+This is not a tutorial or how-to for NodeJS/Javascript, Swagger, API design (RESTful or otherwise), or GitHub.  This assumes that you have enough knowledge of those to operate in a somewhat competent manner. Which is not to say that some pointers or references will not be give, it's just that this it is not the purpose of this tutorial/how-to.
 
 ## Getting started
 
