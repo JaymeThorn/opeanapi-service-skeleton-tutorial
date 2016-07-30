@@ -200,7 +200,7 @@ __A:__ No, absolutely not. Except that it's easier and more intuitive to do it t
 
 ### Step #3 - Response outcomes
 
-Each response defined in your Swagger configuration needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome.
+Each response defined in your Swagger configuration needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome. Each response outcome defined in the Swagger configurationb for a given path's verb should be used when the method is fully implemented.
 
 #### Example
 
@@ -270,6 +270,24 @@ class <My-path>ControllerImpl {
   */
   <my-method>(responder) {
     responder.<my-outcome>('Yippee!');
+  }
+}
+
+module.exports = <My-path>ControllerImpl;
+```
+
+The controller, at this stage of what we are doing, will probably look something like:
+```javascript
+'use strict';
+
+class <My-path>ControllerImpl {
+
+  /**
+  * 
+  * @param {object} responder      - Automatically generated responder object
+  */
+  <my-method>(responder) {
+    responder.notImplemented({ message: 'This method has not been implemented' });
   }
 }
 
@@ -410,6 +428,10 @@ Use the [debug package](https://www.npmjs.com/package/debug) in each of your con
 ### Configuration
 
 The [config package](https://www.npmjs.com/package/config) is already used by the server, and there is already a default configuration file which can be extended. If you need to have configuration settings, I would suggest using this package.
+
+Opinionated advice:
+
+* Use consistent return data structures, for errors and data. If you are returning JSON data, return JSON error objects, too. It just makes it easier, IMO, for the consumer. 
 
 ### Deployment
 
