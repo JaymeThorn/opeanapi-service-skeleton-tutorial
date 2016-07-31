@@ -308,7 +308,7 @@ If you want to keep it straightforward, you can use JSON objects as the sole par
 
 __NB:__ Parameter validation is **purely** the responsibility of the controller method.
 
-An object passed in to the body of the request will have any properties specified by the Swagger configuration for that object, provided with undefined values.
+An object passed in to the body of the request will have any properties specified by the Swagger configuration for that object, provided with undefined values. For this reason, instead of using `body.hasOwnProperty('<property>')` you would want to use `typeof body.<property> !== 'undefined'`, or something similar depending on what you are trying to validate.
 
 ### Step #5 - Services
 
