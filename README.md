@@ -306,6 +306,10 @@ Controller method parameters are determined by the parameters as defined in the 
 
 If you want to keep it straightforward, you can use JSON objects as the sole parameter for the configuration path's verb. If you do this, then you will have two parameters always in the same predictable order. Yeah, I know, helpful (maybe), but not really informative.
 
+__NB:__ Parameter validation is **purely** the responsibility of the controller method.
+
+An object passed in to the body of the request will have any properties specified by the Swagger configuration for that object, provided with undefined values.
+
 ### Step #5 - Services
 
 Let's start with a simple statement. Services are _optional_, They are good practice for a separation of concerns and simplifying your code, but they remain _optional_.
