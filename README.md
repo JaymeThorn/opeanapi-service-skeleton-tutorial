@@ -18,7 +18,7 @@ There is a [companion repository](https://github.com/fastbean-au/swagger-service
 
 ### Conventions
 
-I will be using _my-_ to prefix names and values that you should substitute with appropriate values - these will be given from the context of the step in which they are found. So, please do not blindly apply these in other contexts without thinking. E.g. `my-path` in one context may be the same as `my-controller` in another.
+I will be using _my-_ to prefix names and values that you should substitute with appropriate values - these will be enclosed by angle brackets (e.g. `<my-app>`), and will be given from the context of the step in which they are found. So, please do not blindly apply these in other contexts without thinking. E.g. `my-path` in one context may be the same as `my-controller` in another.
 
 ### Step #1
 
@@ -370,7 +370,7 @@ class <My-path>ControllerImpl {
   */
   <my-method>(<my-param>, responder) {
     debug(`${<my-method>} called with '${<my-param>}'`);
-    
+
     // Parameter validation
     if (typeof <my param>.<my-property-1> === 'undefined' || typeof <my-param>.<my-property-2> === 'undefined') {
       responder.badRequest({ message: 'Manadatory properties not provided in request' });
