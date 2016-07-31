@@ -240,7 +240,7 @@ The example above would require an `ErrorResponse` object definition, and for th
 
 For each verb for a path there needs to be a corresponding `operationId`. The value for the _operationId_ maps to a method within the controller class defined in the step above.
 
-It is the controller methods that call the responder outcomes.
+It is the controller methods that _sets_ the responder outcomes. You still need to return from your method.
 
 I would _suggest_ just creating the controller methods as stubs for the time being. Maybe include a debug statement, and return a successful response, or a 501 - Not implemented response (this would need to be included in your Swagger configuration). Go back later and actually write the functional aspects of the methods.
 
@@ -262,6 +262,7 @@ paths:
 ```
 
 ##### Controller
+
 `./src/controller/<my-path>.js`:
 ```javascript
 'use strict';
@@ -309,6 +310,80 @@ If you want to keep it straightforward, you can use JSON objects as the sole par
 __NB:__ Parameter validation is **purely** the responsibility of the controller method.
 
 An object passed in to the body of the request will have any properties specified by the Swagger configuration for that object, provided with undefined values. For this reason, instead of using `body.hasOwnProperty('<property>')` you would want to use `typeof body.<property> !== 'undefined'`, or something similar depending on what you are trying to validate.
+
+#### Example
+
+A single parameter, an object in the request body, might look something like:
+
+##### Swagger configuration
+
+```yaml
+paths:
+  /<my-path>:
+    x-swagger-router-controller: <my-path>
+    get:
+      operationId: <my-method>
+      consumes:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/<my-data-definition>'
+      responses:
+        200:
+          x-gulp-swagger-codegen-outcome: <my-outcome>
+          schema:
+            type: string
+        400:
+          x-gulp-swagger-codegen-outcome: badRequest
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          x-gulp-swagger-codegen-outcome: error
+          description: Server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        501:
+          x-gulp-swagger-codegen-outcome: notImplemented
+          description: Not implemented
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+```
+
+#### Controller
+
+Note the return after setting the responder for the parameter validation.
+
+```javascript
+'use strict';
+const debug = require('debug')('<my-app>:<my-path>');
+
+class <My-path>ControllerImpl {
+
+  /**
+  * 
+  * @param {object} <my-param>     -
+  * @param {object} responder      - Automatically generated responder object
+  */
+  <my-method>(<my-param>, responder) {
+    debug(`${<my-method>} called with '${<my-param>}'`);
+    
+    // Parameter validation
+    if (typeof <my param>.<my-property-1> === 'undefined' || typeof <my-param>.<my-property-2> === 'undefined') {
+      responder.badRequest({ message: 'Manadatory properties not provided in request' });
+      return;
+    }
+
+    // Return a not implemented response for now, but remove once we have a method that does something.
+    responder.notImplemented({ message: 'This method has not been implemented' });
+  }
+}
+
+module.exports = <My-path>ControllerImpl;
+```
 
 ### Step #5 - Services
 
