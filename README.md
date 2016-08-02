@@ -303,11 +303,11 @@ A note on operationId: think of these as scoped to the Swagger configuration fil
 
 ### Step #4A - Controller method parameters
 
-Controller method parameters are determined by the parameters as defined in the Swagger configuration, in lexicographical order, with the special _responder_ object as an added final parameter.
+Controller method parameters are determined by the parameters as defined in the Swagger configuration, in lexicographical order (which in this context is the order that they are defined in the Swagger configuration, and not necessarily in sort/alphabetical order), with the special _responder_ object as an added final parameter.
 
 If you want to keep it straightforward, you can use JSON objects as the sole parameter for the configuration path's verb. If you do this, then you will have two parameters always in the same predictable order. Yeah, I know, helpful (maybe), but not really informative.
 
-__NB:__ Parameter validation is **purely** the responsibility of the controller method.
+__NB:__ Parameter validation is **entirely** the responsibility of the controller method.
 
 An object passed in to the body of the request will have any properties specified by the Swagger configuration for that object, provided with undefined values. For this reason, instead of using `body.hasOwnProperty('<property>')` you would want to use `typeof body.<property> !== 'undefined'`, or something similar depending on what you are trying to validate.
 
@@ -384,6 +384,8 @@ class <My-path>ControllerImpl {
 
 module.exports = <My-path>ControllerImpl;
 ```
+
+Note that in the example above, the controller method's parameter name was the placeholder `<my-param>`, and not the `body` as defined in the Swagger configuration. It is not necessary for the parameters to use the same name, what is important is that you remember that the order that the parameters are accepted by the controller method is the same order in which they are defined in the Swagger configuration.
 
 ### Step #5 - Services
 
