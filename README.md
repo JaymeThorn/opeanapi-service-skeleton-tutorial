@@ -6,6 +6,8 @@ The Swagger service skeleton allows you to produce a web service without having 
 
 You might want to use the Swagger service skeleton as part of a microservice, a complete nanoservice, a service in a service-oriented-architecture (SOA), or just to provide a RESTful (or stateful) API for a system. It's not limited to those things, but that's the target for it. It's not going to serve up your UI for you - it's not user facing.
 
+You may also like to look through the [tests](https://github.com/steve-gray/swagger-service-skeleton/tree/master/tests) in the swagger-service-skeleton repository.
+
 ## What this is not
 
 This is not a tutorial or how-to for NodeJS/Javascript, Swagger, API design (RESTful or otherwise), or GitHub.  This assumes that you have enough knowledge of those to operate in a somewhat competent manner. Which is not to say that some pointers or references will not be give, it's just that this it is not the purpose of this tutorial/how-to.
@@ -174,7 +176,7 @@ Not so fast. There are some specific things that need to go into the Swagger con
 
 ### Step #2 - Controllers
 
-For every `path` in your Swagger configuration, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`. Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will be a corresponding controller file of the same name).
+For every `path` in your Swagger configuration, you'll need a corresponding entry `x-swagger-router-controller: <path-name>`. Replace the `<path-name>` with the name of the path (it doesn't need to be, you can call it anything, just so long as there will be a corresponding controller file of the same name). The controller constructor code is not executed until the controller is called.
 
 You need a corresponding controller. Create a file `./src/controllers/<path-name>.js` if it doesn't already exist.
 
@@ -359,7 +361,7 @@ Note the return after setting the responder for the parameter validation.
 
 ```javascript
 'use strict';
-const debug = require('debug')('<my-app>:<my-path>');
+const debug = require('debug')('<my-app>-<my-path>');
 
 class <My-path>ControllerImpl {
 
@@ -395,7 +397,9 @@ In our context, services are used by the controllers. They have no direct corres
 
 The services are injected, and that means that a bit of magic happens by the framework that allows this to work, and that makes it easier ...
 
-The services do not _need_ to be written now, and I would suggest deferring the writing of them until once the application structure has been completed (step #7)
+The services do not _need_ to be written now, and I would suggest deferring the writing of them until once the application structure has been completed (step #7).
+
+An __important note__ about services - the services injection is not suitable for promise based services.
 
 #### Name resolution
 
