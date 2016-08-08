@@ -1,6 +1,6 @@
 # swagger-service-skeleton-tutorial
 
-The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that.
+The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that. The swagger-service-skeleton is safe for use on Windows machines as there is no reliance on node-gyp (the problems with which apparently [have been recently addressed](https://github.com/nodejs/node-gyp/issues/629)).
 
 The Swagger service skeleton allows you to produce a web service without having to worry about most of the plumbing. It's use, though, does require some care and attention to detail to get it right. Helping you to get that right is what this hopes to achieve.
 
@@ -17,6 +17,18 @@ This is not a tutorial or how-to for NodeJS/Javascript, Swagger, API design (RES
 There is a [companion repository](https://github.com/fastbean-au/swagger-service-skeleton-starter) for this tutorial which I recommend using; while it is not necessary, this tutorial will assume that you are using it.
 
 [![Dependency Status](https://dependencyci.com/github/fastbean-au/swagger-service-skeleton-starter/badge)](https://dependencyci.com/github/fastbean-au/swagger-service-skeleton-starter)
+
+### Quick overview
+
+There are three layers that you will be working with which plug into the swagger-service-skeleton to create your working API.
+
+* The contract - this is the Swagger configuration file which defines the exposed API.
+
+* The controller - this is the functional code that actions the calls made to the API.
+
+* The services - supporting code for the controllers, examples might include persistence (e.g. databases), authentication (e.g. OAuth or LDAP, etcetera), and interfacing with third party or internal systems - optional.
+
+When each call is made to the API routing is determined by the contract (the Swagger configuration) - the services supporting the designated controller are instantiated, and then the controller is instantiated. Once that is done, the method for the route is executed, which sets a response and returns. The controller and services objects are then discarded. Keep this in mind when deciding on the contract for the API.
 
 ### Conventions
 
@@ -200,7 +212,7 @@ class <My-path>ControllerImpl {
 module.exports = <My-path>ControllerImpl;
 ```
 
-__Q:__ Is it necessary to have the controller name the same as the contract path? 
+__Q:__ Is it necessary to have the controller name the same as the contract path?
 
 __A:__ No, absolutely not. Except that it's easier and more intuitive to do it that way.
 
@@ -266,6 +278,7 @@ paths:
 ##### Controller
 
 `./src/controller/<my-path>.js`:
+
 ```javascript
 'use strict';
 
@@ -284,6 +297,7 @@ module.exports = <My-path>ControllerImpl;
 ```
 
 The controller, at this stage of what we are doing, will probably look something like:
+
 ```javascript
 'use strict';
 
@@ -395,11 +409,9 @@ Let's start with a simple statement. Services are _optional_, They are good prac
 
 In our context, services are used by the controllers. They have no direct correspondence with the Swagger configuration definition file, that is, they are services that support the controllers, and not the services of which _swagger-service-skeleton_ speaks. Services might include things like security, persistence (database), etcetera.
 
-The services are injected, and that means that a bit of magic happens by the framework that allows this to work, and that makes it easier ...
+The services are injected, and that means that a bit of magic happens by the framework that allows this to work. Service classes are instantiated _before_ the controller class that they are injected into.
 
 The services do not _need_ to be written now, and I would suggest deferring the writing of them until once the application structure has been completed (step #7).
-
-An __important note__ about services - the services injection is not suitable for promise based services.
 
 #### Name resolution
 
