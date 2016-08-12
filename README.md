@@ -180,7 +180,10 @@ This will add and populate the `node_modules` directory in the root of the appli
 
 Point your browser at [swagger.io's editor](editor.swagger.io) and define your API.
 
-__Important note:__ Before you get carried away, you need to be aware of an issue in the stack that prevents the HTTP/S verb _PATCH_ from working, instead of using _PATCH_ you will probably want to use _PUT_.
+__Important note:__ Before you get carried away, you need to be aware of several issues or limitations in the stack:
+
+* the HTTP/S verb _PATCH_ is not supported, instead of using _PATCH_ you will probably want to use _PUT_.
+* response types in the Swagger configuration either need to be arrays, nothing/null, or references to definitions. I would suggest using the references.
 
 ### Okay, I have my swagger, what now
 
@@ -272,7 +275,7 @@ paths:
         200:
           x-gulp-swagger-codegen-outcome: <my-outcome>
           schema:
-            type: string
+            $ref: '#/definitions/<my-data-definition>
 ```
 
 ##### Controller
@@ -351,7 +354,7 @@ paths:
         200:
           x-gulp-swagger-codegen-outcome: <my-outcome>
           schema:
-            type: string
+            $ref: '#/definitions/<my-response-definition>
         400:
           x-gulp-swagger-codegen-outcome: badRequest
           description: Bad request
