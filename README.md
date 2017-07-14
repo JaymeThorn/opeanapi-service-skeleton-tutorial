@@ -178,7 +178,7 @@ This will add and populate the `node_modules` directory in the root of the appli
 
 ### Step #1 - Defining the API
 
-Point your browser at [swagger.io's editor](editor.swagger.io) and define your API.
+Point your browser at [swagger.io's editor](http://editor.swagger.io) and define your API.
 
 __Important note:__ Before you get carried away, you need to be aware of several issues or limitations in the stack:
 
