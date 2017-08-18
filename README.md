@@ -10,7 +10,7 @@ You may also like to look through the [tests](https://github.com/steve-gray/swag
 
 ## What this is not
 
-This is not a tutorial or how-to for NodeJS/Javascript, Swagger, API design (RESTful or otherwise), or GitHub.  This assumes that you have enough knowledge of those to operate in a somewhat competent manner. Which is not to say that some pointers or references will not be give, it's just that this it is not the purpose of this tutorial/how-to.
+This is not a tutorial or how-to for NodeJS/Javascript, Swagger, API design (RESTful or otherwise), or GitHub. This assumes that you have enough knowledge of those to operate in a somewhat competent manner. Which is not to say that some pointers or references will not be give, it's just that this it is not the purpose of this tutorial/how-to.
 
 ## Getting started
 
@@ -36,7 +36,7 @@ I will be using _my-_ to prefix names and values that you should substitute with
 
 ### Step #1
 
-Have an idea of what you are trying to achieve. This tutorial is not going to do _Hello World_, and neither is it going to use a contrived example that you will need to sort through to determine what is necessary and what is not. So, maybe this should be called a _how to_ instead of a tutorial Whatever.
+Have an idea of what you are trying to achieve. This tutorial is not going to do _Hello World_, and neither is it going to use a contrived example that you will need to sort through to determine what is necessary and what is not. So, maybe this should be called a _how to_ instead of a tutorial. Whatever.
 
 Now, the rest of the steps do not _need_ to be done in the prescribed order, although some need to be done before others. I'll _try_ to note where this happens - but, if in doubt, just do it in this order.
 
@@ -58,7 +58,7 @@ Not much really, but what is there is pretty important. Once you have forked it 
 |   .eslintrc.json        <--- This helps to show where there are potential problems with your code
 |   .gitignore
 |   Gruntfile.js          <--- Runs ESLint over your code
-|   index.js              <--- LiTFA!  Loads and executes ./src/server.js
+|   index.js              <--- LiTFA! Loads and executes ./src/server.js
 |   LICENSE
 |   package.json          <--- You need to edit this file and make it your own!
 |   README.md             <--- Put your content in here
@@ -221,7 +221,7 @@ __A:__ No, absolutely not. Except that it's easier and more intuitive to do it t
 
 ### Step #3 - Response outcomes
 
-Each response defined in your Swagger configuration needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome. Each response outcome defined in the Swagger configurationb for a given path's verb should be used when the method is fully implemented.
+Each response defined in your Swagger configuration needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome. Each response outcome defined in the Swagger configuration for a given path's verb should be used when the method is fully implemented.
 
 #### Example
 
@@ -392,7 +392,7 @@ class <My-path>ControllerImpl {
 
     // Parameter validation
     if (typeof <my param>.<my-property-1> === 'undefined' || typeof <my-param>.<my-property-2> === 'undefined') {
-      responder.badRequest({ message: 'Manadatory properties not provided in request' });
+      responder.badRequest({ message: 'Mandatory properties not provided in request' });
       return;
     }
 
@@ -418,7 +418,7 @@ The services do not _need_ to be written now, and I would suggest deferring the 
 
 #### Name resolution
 
-Name resolution is vital to understand how to allow the magic that is injection work it's, well, magic.
+Name resolution is vital to understand how to allow the magic that is injection work its, well, magic.
 
 To keep this fairly simple, the name of the service as referenced in the controller class' constructor parameters should be a camel case of the filename without extension (the basename), using the dash/hyphen as a word separator.
 
@@ -541,7 +541,7 @@ Opinionated advice:
 
 Opinionated advice:
 
-* Use containers (e.g. [Docker](http://docker.io/)) - this application structure is eminitely suitable for use as a container (based on the [node container](https://hub.docker.com/_/node/)).
+* Use containers (e.g. [Docker](http://docker.io/)) - this application structure is eminently suitable for use as a container (based on the [node container](https://hub.docker.com/_/node/)).
 * Do not package as an NPM package - this is an application, not a library - it needs to be instantiated, not installed.
 
 #### Installing for production
