@@ -184,6 +184,8 @@ __Important note:__ Before you get carried away, you need to be aware of several
 
 * the HTTP/S verb _PATCH_ is not supported, instead of using _PATCH_ you will probably want to use _PUT_.
 * response types in the Swagger configuration either need to be arrays, nothing/null, or references to definitions. I would suggest using the references.
+* references must be to _simple_ objects with properties, not scalars.
+* [object polymorphism](https://swagger.io/specification/#schemaComposition) and [discriminator objects](https://swagger.io/specification/#discriminator-object-110) are not supported (i.e. do not use constructs such as such as _allOf_, _anyOf_, or _oneOf_).
 
 ### Okay, I have my swagger, what now
 
