@@ -1,12 +1,12 @@
 # swagger-service-skeleton-tutorial
 
-The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that. The swagger-service-skeleton is safe for use on Windows machines as there is no reliance on node-gyp (the problems with which apparently [have been recently addressed](https://github.com/nodejs/node-gyp/issues/629)).
+The purpose of this tutorial is to use the excellent [swagger-service-skeleton](https://github.com/steve-gray/swagger-service-skeleton) (now [forked](https://github.com/fastbean-au/swagger-service-skeleton)) from the brilliant and generous [@steve-gray](https://github.com/steve-gray) to create a working application API, or, at least to help show you how to do that. The swagger-service-skeleton is safe for use on Windows machines as there is no reliance on node-gyp (the problems with which apparently [have been addressed](https://github.com/nodejs/node-gyp/issues/629)).
 
 The Swagger service skeleton allows you to produce a web service without having to worry about most of the plumbing. It's use, though, does require some care and attention to detail to get it right. Helping you to get that right is what this hopes to achieve.
 
 You might want to use the Swagger service skeleton as part of a microservice, a complete nanoservice, a service in a service-oriented-architecture (SOA), or just to provide a RESTful (or stateful) API for a system. It's not limited to those things, but that's the target for it. It's not going to serve up your UI for you - it's not user facing.
 
-You may also like to look through the [tests](https://github.com/steve-gray/swagger-service-skeleton/tree/master/tests) in the swagger-service-skeleton repository.
+You may also like to look through the [tests](https://github.com/fastbean-au/swagger-service-skeleton/tree/master/tests) in the swagger-service-skeleton repository.
 
 ## What this is not
 
@@ -182,7 +182,6 @@ Point your browser at [swagger.io's editor](http://editor.swagger.io) and define
 
 __Important note:__ Before you get carried away, you need to be aware of several issues or limitations in the stack:
 
-* the HTTP/S verb _PATCH_ is not supported, instead of using _PATCH_ you will probably want to use _PUT_.
 * response types in the Swagger configuration either need to be arrays, nothing/null, or references to definitions. I would suggest using the references.
 * references must be to _simple_ objects with properties, not scalars.
 * [object polymorphism](https://swagger.io/specification/#schemaComposition) and [discriminator objects](https://swagger.io/specification/#discriminator-object-110) are not supported (i.e. do not use constructs such as such as _allOf_, _anyOf_, or _oneOf_).
@@ -223,7 +222,9 @@ __A:__ No, absolutely not. Except that it's easier and more intuitive to do it t
 
 ### Step #3 - Response outcomes
 
-Each response defined in your Swagger configuration needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome. Each response outcome defined in the Swagger configuration for a given path's verb should be used when the method is fully implemented.
+Each response defined in your Swagger configuration needs to have a corresponding entry `x-gulp-swagger-codegen-outcome: <name>`. It is this _name_ that is used by the controller methods call on the responder object. The outcome names can be re-used in different path verbs, however, they must be unique within any given verb's outcomes. I am going to suggest that you include a 501 - Not implemented response outcome for use while the method is being developed. Each response outcome defined in the Swagger configuration for a given path's verb should be used when the method is fully implemented.
+
+Each path/verb should have a 500 response for handling server errors, and any that have parameters (body or query) should include a 400 response for bad requests
 
 #### Example
 
@@ -240,7 +241,7 @@ Each response defined in your Swagger configuration needs to have a correspondin
           x-gulp-swagger-codegen-outcome: badRequest
           description: Bad request
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/BadRequestResponse'
         500:
           x-gulp-swagger-codegen-outcome: error
           description: Server error
@@ -277,7 +278,7 @@ paths:
         200:
           x-gulp-swagger-codegen-outcome: <my-outcome>
           schema:
-            $ref: '#/definitions/<my-data-definition>
+            $ref: '#/definitions/<my-data-definition>'
 ```
 
 ##### Controller
@@ -356,12 +357,12 @@ paths:
         200:
           x-gulp-swagger-codegen-outcome: <my-outcome>
           schema:
-            $ref: '#/definitions/<my-response-definition>
+            $ref: '#/definitions/<my-response-definition>'
         400:
           x-gulp-swagger-codegen-outcome: badRequest
           description: Bad request
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/BadRequestResponse'
         500:
           x-gulp-swagger-codegen-outcome: error
           description: Server error
@@ -372,6 +373,36 @@ paths:
           description: Not implemented
           schema:
             $ref: '#/definitions/ErrorResponse'
+definitions:
+  BadRequestResponse:
+    type: object
+    properties:
+      message:
+        type: string
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/BadRequestObject'
+      warnings:
+        type: array
+        items:
+          $ref: '#/definitions/BadRequestObject'
+  BadRequestObject:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      path:
+        type: object
+  ErrorResponse:
+    type: object
+    properties:
+      message:
+        type: string
+      stack:
+        type: string
 ```
 
 #### Controller
@@ -391,12 +422,6 @@ class <My-path>ControllerImpl {
   */
   <my-method>(<my-param>, responder) {
     debug(`${<my-method>} called with '${<my-param>}'`);
-
-    // Parameter validation
-    if (typeof <my param>.<my-property-1> === 'undefined' || typeof <my-param>.<my-property-2> === 'undefined') {
-      responder.badRequest({ message: 'Mandatory properties not provided in request' });
-      return;
-    }
 
     // Return a not implemented response for now, but remove once we have a method that does something.
     responder.notImplemented({ message: 'This method has not been implemented' });
